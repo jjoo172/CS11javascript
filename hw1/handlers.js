@@ -19,7 +19,7 @@ function onFormSubmit(e) {
   var foo_input = form.foo.value;
   var bar_input = form.bar.value;
 
-  form.getElementById("response").innerHTML(foo_input + " " + bar_input);
+  document.getElementById("response").innerHTML = foo_input + " " + bar_input;
 }
 
 function formAlert(e) {
@@ -118,7 +118,11 @@ function drawBox(e) {
   // 200 and a height between 50 and 100, such that it is centered around the
   // point (mouseX, mouseY)
 
-  ctx.fillRect(mouseX - 50, mouseY - 37.5, 100, 75);
+  var randwidth = (Math.random() * 150.0) + 50.0
+  var randheight = (Math.random() * 50.0) + 50.0
+
+
+  ctx.fillRect(mouseX - randwidth/2, mouseY - randheight/2, randwidth, randheight);
   ctx.fillStyle = randomColor();
   
 }
