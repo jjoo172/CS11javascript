@@ -1,4 +1,4 @@
-var appid = [APPID];  // insert valid APPID here
+var appid = ceaa4d3f9aa558a797d43d78d9308343;  // insert valid APPID here
 
 function onWeather(err, data) {
   alert("onWeather");
@@ -18,7 +18,13 @@ function onWeather(err, data) {
     return;
   }
 
+  var el = document.getElementById("error");
+  el.innerHTML = "";
+  document.getElementById("error").style.display = "none";
+
   // TODO: Empty the error element and hide it.
+
+  alert("at least got here");
 
   var el = document.getElementById('response');
 
@@ -26,6 +32,7 @@ function onWeather(err, data) {
   document.getElementById("temp").innerHTML = temp + " &deg;F";
 
   var windspeed = data.wind.speed;
+  document.getElementById("windspeed").innerHTML = windspeed + "mph";
   // TODO: Set the element with ID windspeed's content to the windspeed above,
   // with the unit "mph" afterwards
 
@@ -34,10 +41,18 @@ function onWeather(err, data) {
   // TODO: Create an img tag with src set to iconUrl, and set the content of the
   // icon element to that image.
 
+  var img = document.createElement('img');
+  img.src = iconUrl;
+  document.getElementById("icon").appendChild(img);
+
   var locationEl = document.getElementById("location");
   locationEl.innerHTML = data.name;
 
   // TODO: Make the response element and results elements both visible
+  document.getElementById("results").style.display = "";
+  document.getElementById("response").style.display = "";
+
+  alert("done");
 }
 
 function onZipCode(err, data) {
@@ -57,23 +72,37 @@ function onZipCode(err, data) {
     alert(el.innerHTML);
     return;
   }
+  alert("got here");
   var firstMatch = data.places[0];
-
-  alert(firstMatch["place name"]);
+  var city = firstMatch["place name"];
+  var state = firstMatch["state"];
+  var country = data["country abbreviation"];
 
   /* TODO:
    * Get the city name, state name and country from the place data returned by
    * the Zippopotamus API.
    */
   var url = "http://api.openweathermap.org/data/2.5/weather";
+
+  url = url + "?APPID=ceaa4d3f9aa558a797d43d78d9308343&units=imperial&q=" + String(city) + "," + String(state) + "," + String(country);
+
+  alert(url);
+
   /* TODO:
    * Access the url above with the query string below:
    *   ?APPID=[APPID]&units=imperial&q=[CITY],[STATE],[COUNTRY]
    * Where the things in brackets were found above.
    */
+
+  //alert("afd");
+
+  var q = AJAX.getJSON(url, onWeather);
+
+  alert(a.getJSON);
 }
 
 function getWeather(e) {
+  alert("get weather");
   e.preventDefault(); // stop submit
   var zipCode = document.getElementById("zipCode").value;
   if(!zipCode) {
