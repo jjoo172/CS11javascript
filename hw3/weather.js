@@ -1,7 +1,6 @@
 var appid = ceaa4d3f9aa558a797d43d78d9308343;  // insert valid APPID here
 
 function onWeather(err, data) {
-  alert("onWeather");
   if(err) {
     /* TODO:
      * Toggle the results display for the response display.
@@ -14,7 +13,7 @@ function onWeather(err, data) {
     document.getElementById("response").style.display = "";
     var el = document.getElementById("error");
     el.innerHTML = "Could not find weather information for that ZIP code";
-    alert(el.innerHTML);
+    document.getElementById("error").style.display = "";
     return;
   }
 
@@ -24,7 +23,6 @@ function onWeather(err, data) {
 
   // TODO: Empty the error element and hide it.
 
-  alert("at least got here");
 
   var el = document.getElementById('response');
 
@@ -43,6 +41,7 @@ function onWeather(err, data) {
 
   var img = document.createElement('img');
   img.src = iconUrl;
+  document.getElementById("icon").innerHTML = "";
   document.getElementById("icon").appendChild(img);
 
   var locationEl = document.getElementById("location");
@@ -52,11 +51,9 @@ function onWeather(err, data) {
   document.getElementById("results").style.display = "";
   document.getElementById("response").style.display = "";
 
-  alert("done");
 }
 
 function onZipCode(err, data) {
-  alert("onZipCode");
   if(err) {
     /* TODO:
      * Toggle the results display for the response display.
@@ -69,10 +66,9 @@ function onZipCode(err, data) {
 
     var el = document.getElementById("error");
     el.innerHTML = "Provided ZIP code does not exist!";
-    alert(el.innerHTML);
+    document.getElementById("error").style.display = "";
     return;
   }
-  alert("got here");
   var firstMatch = data.places[0];
   var city = firstMatch["place name"];
   var state = firstMatch["state"];
@@ -86,7 +82,6 @@ function onZipCode(err, data) {
 
   url = url + "?APPID=ceaa4d3f9aa558a797d43d78d9308343&units=imperial&q=" + String(city) + "," + String(state) + "," + String(country);
 
-  alert(url);
 
   /* TODO:
    * Access the url above with the query string below:
@@ -94,15 +89,12 @@ function onZipCode(err, data) {
    * Where the things in brackets were found above.
    */
 
-  //alert("afd");
 
   var q = AJAX.getJSON(url, onWeather);
 
-  alert(a.getJSON);
 }
 
 function getWeather(e) {
-  alert("get weather");
   e.preventDefault(); // stop submit
   var zipCode = document.getElementById("zipCode").value;
   if(!zipCode) {
@@ -112,8 +104,8 @@ function getWeather(e) {
 
     var el = document.getElementById("error");
     el.innerHTML = "ZIP code not set!";
+    document.getElementById("error").style.display = "";
 
-    alert(el.innerHTML);
     return;
   }
   /* TODO:
@@ -123,12 +115,7 @@ function getWeather(e) {
 
   url = "http://api.zippopotam.us/us/" + String(zipCode);
 
-  alert(url);
-
   var a = AJAX.getJSON(url, onZipCode);
-
-  alert(a.getJSON);
-
 
 
 }
