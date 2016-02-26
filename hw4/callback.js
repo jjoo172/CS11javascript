@@ -1,9 +1,10 @@
 // callback.js
 
-var utils = require("./functions");
+var functions = require("./functions");
 
 
 var fs = require("fs");
+
 fs.readFile("employees.json", function(err, data) {
   if (err) {
     throw err;
@@ -18,20 +19,32 @@ fs.readFile("employees.json", function(err, data) {
     console.log(file1);
     console.log("both files read.");
 
-    var newemployees = [];
-
-	for (var i = 0; i < file1.length; i++) {
-  		for (var key in file2) {
-	  		if ((file1[i].id == key) && (file2[key] == true)) {
-    			var newsal = (file1[i].yearsWorking * 1000) + file1[i].salary;
-    			console.log(newsal);
-
-    			newemployees.push({"id":file1[i].id, "fullName":file1[i].name.first + " " + file1[i].name.last, "salary":file1[i].salary});
-    		}
-  		}
-  	}
+    newemployees = functions.create_new_employees(file1, file2);
 
   	console.log(newemployees);
 
+  	fs.writeFile("newEmployees.json", JSON.stringify(newemployees), function(err, data) {
+  		if (err) {
+		  throw err;
+		}
+  		console.log('It\'s saved!');
+	});
+
+	  	// delete if log.txt already exists.
+	fs.unlink('log.txt', function(err, data){
+		if (err) {
+			throw err;
+		}
+	});
+
+  	for (var i = 0; i < newemployees.length; i++) {
+  		fs.appendFile('log.txt', "Full Name: " + newemployees[i].fullName + "\t" +  "Salary: " + newemployees[i].salary + "\n", function(err, data) {
+  			if (err) {
+  				throw err;
+  			}
+  		});
+  	}
+
+  	console.log("log file saved");
   });
 });
