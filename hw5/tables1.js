@@ -4,15 +4,44 @@ var sort_direction = -1;
 
 function sortColumn(column) {
   "use strict";
-
+  
   var table = document.getElementById("ourtable");
   var i;
   var headers = table.getElementsByTagName("th");
   var elements = table.getElementsByTagName("tr");
+  
+  var original_array = [];
+  var new_array = [];
 
   for (var i = 1; i < table.rows.length; i++) {
-    alert(table.rows[i].cells[column].innerHTML);
+    new_array.push(parseInt(table.rows[i].cells[column].innerHTML));
   }
+
+  if (sort_direction === 1) {
+    new_array.sort();
+  }
+
+  else if (sort_direction === -1) {
+    new_array.sort(function(a, b) {
+      if (a > b) {
+       return -1;
+      }
+
+      else if (a < b) {
+        return 1;
+      }
+
+      else { 
+        return 0;
+      }
+    });
+  }
+
+
+  for (var i = 0; i < new_array.length; i++) {
+    alert(new_array[i]);
+  }
+
 
   // column is already sorted
   if (cur_sorted_column === column) {
@@ -34,6 +63,9 @@ function sortColumn(column) {
     // unsort the currently sorted column, if statement for initialization check
     if (cur_sorted_column != -1) {
       headers[cur_sorted_column].style.color = '';
+      for (var i = 1; i < table.rows.length; i++) {
+        //todo
+      }
     }
     
     // sort corrently sorted column in ascending.
@@ -64,8 +96,12 @@ function sortColumn(column) {
    */
 }
 
+
+
 window.addEventListener("load", function(e) {
   "use strict";
+
+  alert("asfd");
 
   var table = document.getElementById("ourtable");
   var i;
@@ -78,7 +114,5 @@ window.addEventListener("load", function(e) {
       }
     })(i));
   }
-
-  // TODO: Attach a click listener on all header cells to call
-  //       bindColumnListener
 });
+
