@@ -8,26 +8,56 @@ function sortColumn(column) {
   var table = document.getElementById("ourtable");
   var i;
   var headers = table.getElementsByTagName("th");
-  var elements = table.getElementsByTagName("tr");
+  var elements = table;
+
+  alert(elements);
   
   var original_array = [];
   var new_array = [];
 
   for (var i = 1; i < table.rows.length; i++) {
-    new_array.push(parseInt(table.rows[i].cells[column].innerHTML));
+    new_array.push([i, table.rows[i].cells[column].innerHTML]);
   }
 
   if (sort_direction === 1) {
-    new_array.sort();
+    new_array.sort(function(a, b) {
+      //TODO!
+      // check if it is a number or a string
+      /*
+      if (parseInt(a) != NaN) {
+        a = parseInt(a);
+        b = parseInt(b);
+      }
+      */
+      if (a[1] > b[1]) {
+       return 1;
+      }
+
+      else if (a[1] < b[1]) {
+        return -1;
+      }
+
+      else { 
+        return 0;
+      }
+    });
   }
 
   else if (sort_direction === -1) {
     new_array.sort(function(a, b) {
-      if (a > b) {
+      //TODO!
+      // check if it is a number or a string
+      /*
+      if (parseInt(a) != NaN) {
+        a = parseInt(a);
+        b = parseInt(b);
+      }
+      */
+      if (a[1] > b[1]) {
        return -1;
       }
 
-      else if (a < b) {
+      else if (a[1] < b[1]) {
         return 1;
       }
 
@@ -38,9 +68,7 @@ function sortColumn(column) {
   }
 
 
-  for (var i = 0; i < new_array.length; i++) {
-    alert(new_array[i]);
-  }
+  alert(new_array);
 
 
   // column is already sorted
@@ -49,10 +77,22 @@ function sortColumn(column) {
     // ascending -> descending
     if (sort_direction == 1) {
       headers[column].style.color = 'red';
+      
+      for (var i = 1; i < new_array.length; i++) {
+
+      }
+      
     }
     // descending -> ascending
     else {
       headers[column].style.color = 'blue';
+      
+      for (var i = 1; i < table.rows.length; i++) {
+        document.getElementById("ourtable").rows[i].cells[0].innerHTML = elements.rows[new_array[i][0]].cells[0].innerHTML;
+        document.getElementById("ourtable").rows[i].cells[1].innerHTML = elements.rows[new_array[i][0]].cells[1].innerHTML;
+        document.getElementById("ourtable").rows[i].cells[2].innerHTML = elements.rows[new_array[i][0]].cells[2].innerHTML;
+      }
+      
     }
     sort_direction *= -1;
 
@@ -75,33 +115,22 @@ function sortColumn(column) {
 
     headers[column].style.color = 'blue';
 
-  }
+    // populate actual values
+    
+    for (var i = 1; i < table.rows.length; i++) {
+        document.getElementById("ourtable").rows[i].cells[0].innerHTML = elements.rows[new_array[i][0]].cells[0].innerHTML;
+        document.getElementById("ourtable").rows[i].cells[1].innerHTML = elements.rows[new_array[i][0]].cells[1].innerHTML;
+        document.getElementById("ourtable").rows[i].cells[2].innerHTML = elements.rows[new_array[i][0]].cells[2].innerHTML;
+    }
+    
 
-  //elements = element.getElementsByTagName(tagName)
-  /*
-   * TODO: Sort the column given by the index, coloring the header as necessary.
-   *
-   * Some notes:
-   * - You will have to keep track of some sort of global state in order to know
-   *   which column you are currently sorting and which direction is the current
-   *   sort direction. This is kind of gross, but for this particular file you
-   *   can't really do much.
-   * - Arrays have a sort method that normally sorts by JavaScript's default
-   *   method, but you can actually provide your own function; if you provide a
-   *   function to Array.prototype.sort, it will take two arguments (comparing
-   *   items, say a and b), and return -1 if a < b, 1 if a > b, and 0 if a == b.
-   * - There's no really nice way to actually sort rows of things, so you'll
-   *   have to first store the rows in the correct order somewhere, clear out
-   *   the table, and append them back in the correct order.
-   */
+  }
 }
 
 
 
 window.addEventListener("load", function(e) {
   "use strict";
-
-  alert("asfd");
 
   var table = document.getElementById("ourtable");
   var i;
