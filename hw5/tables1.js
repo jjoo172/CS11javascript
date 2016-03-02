@@ -79,7 +79,9 @@ function sortColumn(column) {
       headers[column].style.color = 'red';
       
       for (var i = 1; i < new_array.length; i++) {
-
+        document.getElementById("ourtable").rows[i].cells[0].innerHTML = table.rows[new_array[i][0]].cells[0].innerHTML;
+        document.getElementById("ourtable").rows[i].cells[1].innerHTML = table.rows[new_array[i][0]].cells[1].innerHTML;
+        document.getElementById("ourtable").rows[i].cells[2].innerHTML = table.rows[new_array[i][0]].cells[2].innerHTML;
       }
       
     }
