@@ -1,6 +1,6 @@
 
 var cur_sorted_column = -1;
-var sort_direction = -1;
+var sort_direction = 1;
 
 function sortColumn(column) {
   "use strict";
@@ -10,10 +10,8 @@ function sortColumn(column) {
   var headers = table.getElementsByTagName("th");
   var elements = table;
 
-  alert(elements);
-  
   var original_array = [];
-  var new_array = [];
+  var new_array = [[-1, -1]]; // has a filler value since table is 1-indexed
 
   for (var i = 1; i < table.rows.length; i++) {
     new_array.push([i, table.rows[i].cells[column].innerHTML]);
@@ -102,18 +100,36 @@ function sortColumn(column) {
 
   // chosen column is not already sorted
   else {
-    // unsort the currently sorted column, if statement for initialization check
+
+    // change color back to black
     if (cur_sorted_column != -1) {
       headers[cur_sorted_column].style.color = '';
-      for (var i = 1; i < table.rows.length; i++) {
-        //todo
-      }
     }
     
-    // sort corrently sorted column in ascending.
+    // sort currently sorted column in ascending.
     cur_sorted_column = column;
 
-    sort_direction = 1;
+    new_array.sort(function(a, b) {
+      //TODO!
+      // check if it is a number or a string
+      /*
+      if (parseInt(a) != NaN) {
+        a = parseInt(a);
+        b = parseInt(b);
+      }
+      */
+      if (a[1] > b[1]) {
+       return 1;
+      }
+
+      else if (a[1] < b[1]) {
+        return -1;
+      }
+
+      else { 
+        return 0;
+      }
+    });
 
     headers[column].style.color = 'blue';
 
@@ -125,6 +141,8 @@ function sortColumn(column) {
         document.getElementById("ourtable").rows[i].cells[2].innerHTML = elements.rows[new_array[i][0]].cells[2].innerHTML;
     }
     
+
+    sort_direction *= -1;
 
   }
 }
