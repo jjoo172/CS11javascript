@@ -8,7 +8,6 @@ function sortColumn(column) {
   var table = document.getElementById("ourtable");
   var i;
   var headers = table.getElementsByTagName("th");
-  var elements = table;
 
   var new_array = [];
 
