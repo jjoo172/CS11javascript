@@ -86,10 +86,21 @@ function sortColumn(column) {
     if (sort_direction === 1) {
       headers[column].style.color = 'blue';
       
-      for (var i = 1; i < new_array.length; i++) {
-        document.getElementById("ourtable").rows[i].cells[0].innerHTML = table.rows[new_array[i-1][0]].cells[0].innerHTML;
-        document.getElementById("ourtable").rows[i].cells[1].innerHTML = table.rows[new_array[i-1][0]].cells[1].innerHTML;
-        document.getElementById("ourtable").rows[i].cells[2].innerHTML = table.rows[new_array[i-1][0]].cells[2].innerHTML;
+      // append new rows
+      for (var i = 0; i < new_array.length; i++) {
+        var row = table.insertRow(-1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+
+        cell1.innerHTML = table.rows[new_array[i][0]].cells[0].innerHTML;
+        cell2.innerHTML = table.rows[new_array[i][0]].cells[1].innerHTML;
+        cell3.innerHTML = table.rows[new_array[i][0]].cells[2].innerHTML;
+      }
+
+      // get rid of old rows
+      for (var i = 0; i < new_array.length; i++) {
+        table.deleteRow(1);
       }
       
     }
@@ -97,10 +108,21 @@ function sortColumn(column) {
     else {
       headers[column].style.color = 'red';
       
-      for (var i = 1; i < table.rows.length; i++) {
-        document.getElementById("ourtable").rows[i].cells[0].innerHTML = elements.rows[new_array[i-1][0]].cells[0].innerHTML;
-        document.getElementById("ourtable").rows[i].cells[1].innerHTML = elements.rows[new_array[i-1][0]].cells[1].innerHTML;
-        document.getElementById("ourtable").rows[i].cells[2].innerHTML = elements.rows[new_array[i-1][0]].cells[2].innerHTML;
+      // append new rows
+      for (var i = 0; i < new_array.length; i++) {
+        var row = table.insertRow(-1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+
+        cell1.innerHTML = table.rows[new_array[i][0]].cells[0].innerHTML;
+        cell2.innerHTML = table.rows[new_array[i][0]].cells[1].innerHTML;
+        cell3.innerHTML = table.rows[new_array[i][0]].cells[2].innerHTML;
+      }
+
+      // get rid of old rows
+      for (var i = 0; i < new_array.length; i++) {
+        table.deleteRow(1);
       }
       
     }
@@ -143,11 +165,22 @@ function sortColumn(column) {
 
     // populate actual values
     
-    for (var i = 1; i < table.rows.length; i++) {
-        document.getElementById("ourtable").rows[i].cells[0].innerHTML = elements.rows[new_array[i-1][0]].cells[0].innerHTML;
-        document.getElementById("ourtable").rows[i].cells[1].innerHTML = elements.rows[new_array[i-1][0]].cells[1].innerHTML;
-        document.getElementById("ourtable").rows[i].cells[2].innerHTML = elements.rows[new_array[i-1][0]].cells[2].innerHTML;
-    }
+      // append new rows
+      for (var i = 0; i < new_array.length; i++) {
+        var row = table.insertRow(-1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+
+        cell1.innerHTML = table.rows[new_array[i][0]].cells[0].innerHTML;
+        cell2.innerHTML = table.rows[new_array[i][0]].cells[1].innerHTML;
+        cell3.innerHTML = table.rows[new_array[i][0]].cells[2].innerHTML;
+      }
+
+      // get rid of old rows
+      for (var i = 0; i < new_array.length; i++) {
+        table.deleteRow(1);
+      }
     
 
     sort_direction = 1;
