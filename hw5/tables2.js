@@ -15,6 +15,9 @@ var SortTable = function(id, types) {
   this.iden = id;
   this.types = types;
 
+  this.sort_direction = 1;
+  this.cur_sorted_column = -1;
+
   var self = this;
 
   window.addEventListener("load", function(e) {
@@ -41,22 +44,17 @@ SortTable.prototype.sortColumn = function(index) {
   var table = document.getElementById(this.iden);
   var body = table.getElementsByTagName("tbody");
   var rows = body[0].getElementsByTagName("tr");
-  
-  alert(rows);
-  alert(rows[0].cells[index].innerHTML);
+  var headers_out = table.getElementsByTagName("thead");
+  var headers = headers_out[0].getElementsByTagName("th");
 
   var new_array = [];
   
   for (var i = 0; i < rows.length; i++) {
-    alert(rows[i].cells[index].innerHTML);
     new_array.push([i, rows[i].cells[index].innerHTML]);
   }
 
-  alert(new_array);
-
-/*
   // ascending -> descending
-  if (sort_direction === 1) {
+  if (this.sort_direction === 1) {
     new_array.sort(function(a, b) {
       if (a[1] > b[1]) {
        return -1;
@@ -73,7 +71,7 @@ SortTable.prototype.sortColumn = function(index) {
   }
 
   // descending -> ascending
-  else if (sort_direction === -1) {
+  else if (this.sort_direction === -1) {
     new_array.sort(function(a, b) {
       if (a[1] > b[1]) {
        return 1;
@@ -93,69 +91,76 @@ SortTable.prototype.sortColumn = function(index) {
     alert("something went wrong!");
   }
 
-  sort_direction *= -1;
+  this.sort_direction *= -1;
 
   // at this point, sort_direction holds now the currently sorted direction of new_array
 
   // column is already sorted
-  if (cur_sorted_column === column) {
+  if (this.cur_sorted_column === index) {
 
     // ascending
-    if (sort_direction === 1) {
-      headers[column].style.color = 'blue';
+    if (this.sort_direction === 1) {
+      headers[index].style.color = 'blue';
       
       // append new rows
       for (var i = 0; i < new_array.length; i++) {
-        var row = table.insertRow(-1);
+        var tableRef = table.getElementsByTagName('tbody')[0];
+        var row = tableRef.insertRow(-1);
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);
         var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
 
-        cell1.innerHTML = table.rows[new_array[i][0]].cells[0].innerHTML;
-        cell2.innerHTML = table.rows[new_array[i][0]].cells[1].innerHTML;
-        cell3.innerHTML = table.rows[new_array[i][0]].cells[2].innerHTML;
+        cell1.innerHTML = tableRef.rows[new_array[i][0]].cells[0].innerHTML;
+        cell2.innerHTML = tableRef.rows[new_array[i][0]].cells[1].innerHTML;
+        cell3.innerHTML = tableRef.rows[new_array[i][0]].cells[2].innerHTML;
+        cell4.innerHTML = tableRef.rows[new_array[i][0]].cells[3].innerHTML;
       }
 
       // get rid of old rows
       for (var i = 0; i < new_array.length; i++) {
-        table.deleteRow(1);
+        tableRef.deleteRow(0);
       }
       
     }
     // descending
     else {
-      headers[column].style.color = 'red';
+      headers[index].style.color = 'red';
       
       // append new rows
       for (var i = 0; i < new_array.length; i++) {
-        var row = table.insertRow(-1);
+        var tableRef = table.getElementsByTagName('tbody')[0];
+        var row = tableRef.insertRow(-1);
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);
         var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
 
-        cell1.innerHTML = table.rows[new_array[i][0]].cells[0].innerHTML;
-        cell2.innerHTML = table.rows[new_array[i][0]].cells[1].innerHTML;
-        cell3.innerHTML = table.rows[new_array[i][0]].cells[2].innerHTML;
+        cell1.innerHTML = tableRef.rows[new_array[i][0]].cells[0].innerHTML;
+        cell2.innerHTML = tableRef.rows[new_array[i][0]].cells[1].innerHTML;
+        cell3.innerHTML = tableRef.rows[new_array[i][0]].cells[2].innerHTML;
+        cell4.innerHTML = tableRef.rows[new_array[i][0]].cells[3].innerHTML;
       }
 
       // get rid of old rows
       for (var i = 0; i < new_array.length; i++) {
-        table.deleteRow(1);
+        tableRef.deleteRow(0);
       }
       
     }
   }
-
+  
+  
   // chosen column is not already sorted
   else {
 
     // change color back to black
-    if (cur_sorted_column != -1) {
-      headers[cur_sorted_column].style.color = '';
+    if (this.cur_sorted_column != -1) {
+      headers[this.cur_sorted_column].style.color = '';
     }
     
     // sort currently sorted column in ascending.
-    cur_sorted_column = column;
+    this.cur_sorted_column = index;
 
     new_array.sort(function(a, b) {
       if (a[1] > b[1]) {
@@ -171,30 +176,33 @@ SortTable.prototype.sortColumn = function(index) {
       }
     });
 
-    headers[column].style.color = 'blue';
+    headers[index].style.color = 'blue';
 
     // populate actual values
     
       // append new rows
       for (var i = 0; i < new_array.length; i++) {
-        var row = table.insertRow(-1);
+        var tableRef = table.getElementsByTagName('tbody')[0];
+        var row = tableRef.insertRow(-1);
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);
         var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
 
-        cell1.innerHTML = table.rows[new_array[i][0]].cells[0].innerHTML;
-        cell2.innerHTML = table.rows[new_array[i][0]].cells[1].innerHTML;
-        cell3.innerHTML = table.rows[new_array[i][0]].cells[2].innerHTML;
+        cell1.innerHTML = tableRef.rows[new_array[i][0]].cells[0].innerHTML;
+        cell2.innerHTML = tableRef.rows[new_array[i][0]].cells[1].innerHTML;
+        cell3.innerHTML = tableRef.rows[new_array[i][0]].cells[2].innerHTML;
+        cell4.innerHTML = tableRef.rows[new_array[i][0]].cells[3].innerHTML;
       }
 
       // get rid of old rows
       for (var i = 0; i < new_array.length; i++) {
-        table.deleteRow(1);
+        tableRef.deleteRow(0);
       }
     
 
-    sort_direction = 1;
+    this.sort_direction = 1;
 
   }
-*/
+
 };
