@@ -4,16 +4,13 @@ var sort_direction = 1; // indicates the currently sorted direction of the colum
 
 function sortColumn(column) {
   "use strict";
-
-  alert("cur_sorted_column" + cur_sorted_column);
-  alert("sort_direction" + sort_direction);
   
   var table = document.getElementById("ourtable");
   var i;
   var headers = table.getElementsByTagName("th");
   var elements = table;
 
-  var new_array = []; // has a filler value since table is 1-indexed
+  var new_array = [];
 
   for (var i = 1; i < table.rows.length; i++) {
     new_array.push([i, table.rows[i].cells[column].innerHTML]);
@@ -22,14 +19,6 @@ function sortColumn(column) {
   // ascending -> descending
   if (sort_direction === 1) {
     new_array.sort(function(a, b) {
-      //TODO!
-      // check if it is a number or a string
-      /*
-      if (parseInt(a) != NaN) {
-        a = parseInt(a);
-        b = parseInt(b);
-      }
-      */
       if (a[1] > b[1]) {
        return -1;
       }
@@ -47,14 +36,6 @@ function sortColumn(column) {
   // descending -> ascending
   else if (sort_direction === -1) {
     new_array.sort(function(a, b) {
-      //TODO!
-      // check if it is a number or a string
-      /*
-      if (parseInt(a) != NaN) {
-        a = parseInt(a);
-        b = parseInt(b);
-      }
-      */
       if (a[1] > b[1]) {
        return 1;
       }
@@ -72,8 +53,6 @@ function sortColumn(column) {
   else {
     alert("something went wrong!");
   }
-
-  alert(new_array);
 
   sort_direction *= -1;
 
@@ -140,14 +119,6 @@ function sortColumn(column) {
     cur_sorted_column = column;
 
     new_array.sort(function(a, b) {
-      //TODO!
-      // check if it is a number or a string
-      /*
-      if (parseInt(a) != NaN) {
-        a = parseInt(a);
-        b = parseInt(b);
-      }
-      */
       if (a[1] > b[1]) {
        return 1;
       }
