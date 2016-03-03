@@ -55,6 +55,13 @@ SortTable.prototype.sortColumn = function(index) {
 
   // ascending -> descending
   if (this.sort_direction === 1) {
+    // numeric sort
+    if (this.types[index] === Number) {
+      new_array.sort(function(a, b) {
+        return parseInt(b[1]) - parseInt(a[1]);
+      });
+    }
+    else { 
     new_array.sort(function(a, b) {
       if (a[1] > b[1]) {
        return -1;
@@ -69,9 +76,17 @@ SortTable.prototype.sortColumn = function(index) {
       }
     });
   }
+  }
 
   // descending -> ascending
   else if (this.sort_direction === -1) {
+    // numeric sort
+    if (this.types[index] === Number) {
+      new_array.sort(function(a, b) {
+        return parseInt(a[1]) - parseInt(b[1]);
+      });
+    }
+    else {
     new_array.sort(function(a, b) {
       if (a[1] > b[1]) {
        return 1;
@@ -85,6 +100,7 @@ SortTable.prototype.sortColumn = function(index) {
         return 0;
       }
     });
+  }
   }
 
   else {
@@ -162,6 +178,14 @@ SortTable.prototype.sortColumn = function(index) {
     // sort currently sorted column in ascending.
     this.cur_sorted_column = index;
 
+// numeric sort
+    if (this.types[index] === Number) {
+      new_array.sort(function(a, b) {
+        return parseInt(a[1]) - parseInt(b[1]);
+      });
+    }
+
+    else{
     new_array.sort(function(a, b) {
       if (a[1] > b[1]) {
        return 1;
@@ -175,6 +199,7 @@ SortTable.prototype.sortColumn = function(index) {
         return 0;
       }
     });
+  }
 
     headers[index].style.color = 'blue';
 
